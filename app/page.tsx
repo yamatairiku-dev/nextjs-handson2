@@ -1,53 +1,11 @@
-import Image from 'next/image';
-
-type Photo = {
-  id: string;
-  created_at: string;
-  width: number;
-  height: number;
-  color: string;
-  description: string;
-  urls: {
-    raw: string;
-    full: string;
-    regular: string;
-    small: string;
-    thumb: string;
-  };
-  links: {
-    self: string;
-    html: string;
-    download: string;
-  };
-};
-
-const getRamdomPhotos = async (): Promise<Photo[]> => {
-  const params = new URLSearchParams();
-  // params.append(
-  //   'client_id',
-  //   process.env.UNSPLASH_API_ACCESS_KEY ?? ''
-  // );
-  params.append('count', '30');
-  const response = await fetch(
-    `https://api.unsplash.com/random?${params.toString()}`,
-    { method: 'GET', cache: 'no-cache' }
-  );
-  return response.json();
-};
+import { Search } from '@/lib/component/Serach';
+import { getRamdomPhotos } from '@/lib/unsplash';
 
 const Home = async () => {
   const randomPhotos = await getRamdomPhotos();
   return (
     <div>
-      {randomPhotos.map((photo) => (
-        <Image
-          key={photo.id}
-          src={photo.urls.small}
-          width={400}
-          height={photo.height * (400 / photo.width)}
-          alt={photo.description}
-        />
-      ))}
+      <Search randomPhotos={randomPhotos} />
     </div>
   );
 };
