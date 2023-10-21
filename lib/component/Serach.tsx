@@ -48,7 +48,7 @@ export const Search: FunctionComponent<{
           onClick={async () => {
             setSearching(true);
             const response = await fetch(
-              `http://localhost:3000/api/search`,
+              'http://localhost:3000/api/search',
               {
                 method: 'POST',
                 body: JSON.stringify({ query }), //javascript objectをjsonに変換
